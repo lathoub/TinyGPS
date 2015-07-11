@@ -75,10 +75,8 @@ public:
   void crack_datetime(int *year, byte *month, byte *day,     byte *hour, byte *minute, byte *second, byte *hundredths = 0, unsigned long *fix_age = 0);
   float f_altitude();
   float f_course();
-  float f_speed_knots();
-  float f_speed_mph();
-  float f_speed_mps();
-  float f_speed_kmph();
+
+  float f_speed(byte);
 
   static int library_version() { return _GPS_VERSION; }
 

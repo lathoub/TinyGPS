@@ -69,9 +69,7 @@ void TinyGPS<SerialPort>::evaluate()
 	{
 		char c = _serialPort.read();
 		// Serial.write(c); // uncomment this line if you want to see the GPS data flowing
-		if (this->encode(c)) // Did a new valid sentence come in?
-		{
-		}
+		this->encode(c);
 	}
 }
 
@@ -97,7 +95,7 @@ bool TinyGPS<SerialPort>::encode(char c)
     }
     ++_term_number;
     _term_offset = 0;
-    _is_checksum_term = c == '*';
+    _is_checksum_term = (c == '*');
     return valid_sentence;
 
   case '$': // sentence begin
@@ -181,8 +179,6 @@ unsigned long TinyGPS<SerialPort>::parse_degrees()
   }
   return (left_of_decimal / 100) * 1000000 + (hundred1000ths_of_minute + 3) / 6;
 }
-
-#define COMBINE(sentence_type, term_number) (((unsigned)(sentence_type) << 5) | term_number)
 
 // Processes a just-completed term
 // Returns true if new sentence has just passed checksum test and is validated
@@ -438,29 +434,18 @@ float TinyGPS<SerialPort>::f_course()
 }
 
 template<class SerialPort>
-float TinyGPS<SerialPort>::f_speed_knots()
+float TinyGPS<SerialPort>::f_speed(byte unit)
 {
-  return _speed == GPS_INVALID_SPEED ? GPS_INVALID_F_SPEED : _speed / 100.0;
+	switch (unit) {
+	case KTS:
+		return _speed == GPS_INVALID_SPEED ? GPS_INVALID_F_SPEED : (_speed / 100.0);
+	case MPH:
+		return _speed == GPS_INVALID_SPEED ? GPS_INVALID_F_SPEED : (_speed / 100.0) * _GPS_MPH_PER_KNOT;
+	case KPH:
+		return _speed == GPS_INVALID_SPEED ? GPS_INVALID_F_SPEED : (_speed / 100.0) * _GPS_KMPH_PER_KNOT;
+	case MPS:
+		return _speed == GPS_INVALID_SPEED ? GPS_INVALID_F_SPEED : (_speed / 100.0) * _GPS_MPS_PER_KNOT;
+	case MPM:
+		return _speed == GPS_INVALID_SPEED ? GPS_INVALID_F_SPEED : (_speed / 100.0) * _GPS_MILES_PER_METER;
+	}
 }
-
-template<class SerialPort>
-float TinyGPS<SerialPort>::f_speed_mph()
-{ 
-  float sk = f_speed_knots();
-  return sk == GPS_INVALID_F_SPEED ? GPS_INVALID_F_SPEED : _GPS_MPH_PER_KNOT * sk; 
-}
-
-template<class SerialPort>
-float TinyGPS<SerialPort>::f_speed_mps()
-{ 
-  float sk = f_speed_knots();
-  return sk == GPS_INVALID_F_SPEED ? GPS_INVALID_F_SPEED : _GPS_MPS_PER_KNOT * sk; 
-}
-
-template<class SerialPort>
-float TinyGPS<SerialPort>::f_speed_kmph()
-{ 
-  float sk = f_speed_knots();
-  return sk == GPS_INVALID_F_SPEED ? GPS_INVALID_F_SPEED : _GPS_KMPH_PER_KNOT * sk; 
-}
-
