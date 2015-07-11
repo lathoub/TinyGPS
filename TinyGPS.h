@@ -3,6 +3,7 @@ TinyGPS - a small GPS library for Arduino providing basic NMEA parsing
 Based on work by and "distance_to" and "course_to" courtesy of Maarten Lamers.
 Suggestion to add satellites(), course_to(), and cardinal(), by Matt Monson.
 Precision improvements suggested by Wayne Holder.
+Updated by lathoub
 Copyright (C) 2008-2013 Mikal Hart
 All rights reserved.
 
@@ -21,13 +22,13 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef TinyGPS_h
-#define TinyGPS_h
+#pragma once
 
-#if defined(ARDUINO) && ARDUINO >= 100
-#include "Arduino.h"
+#if ARDUINO
+#include <Arduino.h>
 #else
-#include "WProgram.h"
+#include <inttypes.h>
+typedef uint8_t byte;
 #endif
 
 #include <stdlib.h>
@@ -38,6 +39,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define _GPS_KMPH_PER_KNOT 1.852
 #define _GPS_MILES_PER_METER 0.00062137112
 #define _GPS_KM_PER_METER 0.001
+
 // #define _GPS_NO_STATS
 
 class TinyGPS
@@ -142,16 +144,3 @@ private:
   long gpsatol(const char *str);
   int gpsstrcmp(const char *str1, const char *str2);
 };
-
-#if !defined(ARDUINO) 
-// Arduino 0012 workaround
-#undef int
-#undef char
-#undef long
-#undef byte
-#undef float
-#undef abs
-#undef round 
-#endif
-
-#endif
