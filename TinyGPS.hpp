@@ -408,8 +408,7 @@ void TinyGPS<SerialPort>::f_get_position(float *latitude, float *longitude, unsi
 }
 
 template<class SerialPort>
-void TinyGPS<SerialPort>::crack_datetime(int *year, byte *month, byte *day,
-  byte *hour, byte *minute, byte *second, byte *hundredths, unsigned long *age)
+void TinyGPS<SerialPort>::crack_datetime(int *year, byte *month, byte *day, byte *hour, byte *minute, byte *second, byte *hundredths, unsigned long *age)
 {
   unsigned long date, time;
   get_datetime(&date, &time, age);

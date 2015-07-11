@@ -42,7 +42,7 @@ public:
 
   TinyGPS(SerialPort&);
 
-  void begin(int baudrate);
+  void begin(int baudrate = 9600);
   void evaluate();
 
   // Events
@@ -131,14 +131,16 @@ private:
 #endif
 
   // internal utilities
-  int from_hex(char a);
   unsigned long parse_decimal();
   unsigned long parse_degrees();
-  bool term_complete();
-  bool gpsisdigit(char c) { return c >= '0' && c <= '9'; }
-  long gpsatol(const char *str);
-  int gpsstrcmp(const char *str1, const char *str2);
 
+  bool term_complete();
+
+  static int from_hex(char a);
+
+  static bool gpsisdigit(char c) { return c >= '0' && c <= '9'; }
+  static long gpsatol(const char *str);
+  static int gpsstrcmp(const char *str1, const char *str2);
 };
 
 template<class SerialPort>
