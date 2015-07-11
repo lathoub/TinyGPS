@@ -45,6 +45,8 @@ public:
   void begin(int baudrate = 9600);
   void evaluate();
 
+  void sendCommand(const char *str);
+
   // Events
   Event<EventFunc> GPRMC;
   Event<EventFunc> GPGGA;

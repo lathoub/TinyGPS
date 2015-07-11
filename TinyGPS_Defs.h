@@ -34,7 +34,9 @@ typedef uint8_t byte;
 
 // -----------------------------------------------------------------------------
 
-//#define _GPS_NO_STATS
+#define _GPS_NO_STATS
+
+// -----------------------------------------------------------------------------
 
 #define GPS_CREATE_INSTANCE(SerialPort, Name) \
     TinyGPS<typeof(SerialPort)> Name((typeof(SerialPort)&)SerialPort);

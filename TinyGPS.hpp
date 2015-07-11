@@ -74,6 +74,11 @@ void TinyGPS<SerialPort>::evaluate()
 }
 
 template<class SerialPort>
+void TinyGPS<SerialPort>::sendCommand(const char *str) {
+	_serialPort.println(str);
+}
+
+template<class SerialPort>
 bool TinyGPS<SerialPort>::encode(char c)
 {
   bool valid_sentence = false;
