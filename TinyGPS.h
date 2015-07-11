@@ -24,23 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #pragma once
 
-#if ARDUINO
-#include <Arduino.h>
-#else
-#include <inttypes.h>
-typedef uint8_t byte;
-#endif
-
-#include <stdlib.h>
-
-#define _GPS_VERSION 13 // software version of this library
-#define _GPS_MPH_PER_KNOT 1.15077945
-#define _GPS_MPS_PER_KNOT 0.51444444
-#define _GPS_KMPH_PER_KNOT 1.852
-#define _GPS_MILES_PER_METER 0.00062137112
-#define _GPS_KM_PER_METER 0.001
-
-// #define _GPS_NO_STATS
+#include "TinyGPS_Defs.h"
 
 class TinyGPS
 {
@@ -56,8 +40,8 @@ public:
   static const float GPS_INVALID_F_ANGLE, GPS_INVALID_F_ALTITUDE, GPS_INVALID_F_SPEED;
 
   TinyGPS();
+
   bool encode(char c); // process one character received from GPS
-  TinyGPS &operator << (char c) {encode(c); return *this;}
 
   // lat/long in MILLIONTHs of a degree and age of fix in milliseconds
   // (note: versions 12 and earlier gave lat/long in 100,000ths of a degree.
