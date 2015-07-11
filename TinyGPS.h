@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "TinyGPS_Defs.h"
 
+template<class SerialPort>
 class TinyGPS
 {
 public:
@@ -39,7 +40,7 @@ public:
 
   static const float GPS_INVALID_F_ANGLE, GPS_INVALID_F_ALTITUDE, GPS_INVALID_F_SPEED;
 
-  TinyGPS();
+  TinyGPS(SerialPort&);
 
   bool encode(char c); // process one character received from GPS
 
@@ -85,6 +86,8 @@ public:
   void stats(unsigned long *chars, unsigned short *good_sentences, unsigned short *failed_cs);
 #endif
 
+  SerialPort& _serialPort;
+
 private:
   enum {_GPS_SENTENCE_GPGGA, _GPS_SENTENCE_GPRMC, _GPS_SENTENCE_OTHER};
 
@@ -127,4 +130,16 @@ private:
   bool gpsisdigit(char c) { return c >= '0' && c <= '9'; }
   long gpsatol(const char *str);
   int gpsstrcmp(const char *str1, const char *str2);
+
 };
+
+template<class SerialPort>
+const float TinyGPS<SerialPort>::GPS_INVALID_F_ANGLE = 1000.0;
+
+template<class SerialPort>
+const float TinyGPS<SerialPort>::GPS_INVALID_F_ALTITUDE = 1000000.0;
+
+template<class SerialPort>
+const float TinyGPS<SerialPort>::GPS_INVALID_F_SPEED = -1.0;
+
+#include "TinyGPS.hpp"
