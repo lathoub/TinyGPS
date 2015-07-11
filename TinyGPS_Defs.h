@@ -9,6 +9,7 @@ typedef uint8_t byte;
 
 #include <stdlib.h>
 
+#include "Events.h"
 #include "nmea_Defs.h"
 
 // -----------------------------------------------------------------------------

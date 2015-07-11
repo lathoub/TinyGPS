@@ -60,6 +60,25 @@ TinyGPS<SerialPort>::TinyGPS(SerialPort& inSerial)
 //
 
 template<class SerialPort>
+void TinyGPS<SerialPort>::begin(int baudrate)
+{
+	_serialPort.begin(baudrate);
+}
+
+template<class SerialPort>
+void TinyGPS<SerialPort>::evaluate()
+{
+	while (_serialPort.available())
+	{
+		char c = _serialPort.read();
+		// Serial.write(c); // uncomment this line if you want to see the GPS data flowing
+		if (this->encode(c)) // Did a new valid sentence come in?
+		{
+		}
+	}
+}
+
+template<class SerialPort>
 bool TinyGPS<SerialPort>::encode(char c)
 {
   bool valid_sentence = false;
@@ -195,6 +214,7 @@ bool TinyGPS<SerialPort>::term_complete()
           _longitude = _new_longitude;
           _speed     = _new_speed;
           _course    = _new_course;
+		  GPRMC(this, NULL);
           break;
         case _GPS_SENTENCE_GPGGA:
           _altitude  = _new_altitude;
@@ -203,7 +223,8 @@ bool TinyGPS<SerialPort>::term_complete()
           _longitude = _new_longitude;
           _numsats   = _new_numsats;
           _hdop      = _new_hdop;
-          break;
+		  GPGGA(this, NULL);
+		  break;
         }
 
         return true;

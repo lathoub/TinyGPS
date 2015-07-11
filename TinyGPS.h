@@ -42,6 +42,13 @@ public:
 
   TinyGPS(SerialPort&);
 
+  void begin(int baudrate);
+  void evaluate();
+
+  // Events
+  Event<EventFunc> GPRMC;
+  Event<EventFunc> GPGGA;
+
   bool encode(char c); // process one character received from GPS
 
   // lat/long in MILLIONTHs of a degree and age of fix in milliseconds
