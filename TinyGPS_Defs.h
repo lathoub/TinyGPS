@@ -26,7 +26,7 @@ typedef uint8_t byte;
 #define MPH 2 // miles per hour
 #define KPH 3 // km per hour
 #define MPS 4 // meters per second
-#define MPM 4 // miles per meter
+#define MPM 5 // miles per meter
 
 // -----------------------------------------------------------------------------
 
