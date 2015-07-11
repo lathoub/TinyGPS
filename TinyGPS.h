@@ -49,8 +49,6 @@ public:
   Event<EventFunc> GPRMC;
   Event<EventFunc> GPGGA;
 
-  bool encode(char c); // process one character received from GPS
-
   // lat/long in MILLIONTHs of a degree and age of fix in milliseconds
   // (note: versions 12 and earlier gave lat/long in 100,000ths of a degree.
   void get_position(long *latitude, long *longitude, unsigned long *fix_age = 0);
@@ -74,8 +72,7 @@ public:
   inline unsigned long hdop() { return _hdop; }
 
   void f_get_position(float *latitude, float *longitude, unsigned long *fix_age = 0);
-  void crack_datetime(int *year, byte *month, byte *day, 
-    byte *hour, byte *minute, byte *second, byte *hundredths = 0, unsigned long *fix_age = 0);
+  void crack_datetime(int *year, byte *month, byte *day,     byte *hour, byte *minute, byte *second, byte *hundredths = 0, unsigned long *fix_age = 0);
   float f_altitude();
   float f_course();
   float f_speed_knots();
@@ -92,6 +89,10 @@ public:
 #ifndef _GPS_NO_STATS
   void stats(unsigned long *chars, unsigned short *good_sentences, unsigned short *failed_cs);
 #endif
+
+private:
+
+  bool encode(char c); // process one character received from GPS
 
   SerialPort& _serialPort;
 

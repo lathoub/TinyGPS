@@ -23,9 +23,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #pragma once
 
-#define _GPRMC_TERM   "GPRMC"
-#define _GPGGA_TERM   "GPGGA"
-
 template<class SerialPort>
 TinyGPS<SerialPort>::TinyGPS(SerialPort& inSerial)
   : _serialPort(inSerial)
