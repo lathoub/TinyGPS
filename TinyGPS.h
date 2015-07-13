@@ -61,6 +61,9 @@ public:
   // signed altitude in centimeters (from GPGGA sentence)
   inline long altitude() { return _altitude; }
 
+  // 
+  inline bool hasFix() { return _gps_data_good; }
+
   // course in last full GPRMC sentence in 100th of a degree
   inline unsigned long course() { return _course; }
 

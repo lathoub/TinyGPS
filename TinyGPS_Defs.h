@@ -40,3 +40,16 @@ typedef uint8_t byte;
 
 #define GPS_CREATE_INSTANCE(SerialPort, Name) \
     TinyGPS<typeof(SerialPort)> Name((typeof(SerialPort)&)SerialPort);
+
+#if defined(ARDUINO_SAM_DUE) || defined(USBCON)
+// Leonardo, Due and other USB boards use Serial1 by default.
+#define GPS_CREATE_DEFAULT_INSTANCE()                                      \
+        GPS_CREATE_INSTANCE(Serial1, gps);
+#else
+/*! \brief Create an instance of the library with default name, serial port
+and settings, for compatibility with sketches written with pre-v4.2 MIDI Lib,
+or if you don't bother using custom names, serial port or settings.
+*/
+#define GPS_CREATE_DEFAULT_INSTANCE()                                      \
+        GPS_CREATE_INSTANCE(Serial,  gps);
+#endif
